@@ -50,7 +50,7 @@ public class C06 extends ListenerAdapter implements CommandExecutor, Listener {
     private void startBot()  {
 
         try {
-            jda = JDABuilder.createDefault("ODcyODQ5MTg1MzYyMjk2ODYy.YQv2Jg.Q9_G4wZtkon7LnXy1O_-Aq54tpU",
+                jda = JDABuilder.createDefault("ODcyODQ5MTg1MzYyMjk2ODYy.YQv2Jg.Q9_G4wZtkon7LnXy1O_-Aq54tpU",
                     GatewayIntent.GUILD_MEMBERS,
                     GatewayIntent.GUILD_MESSAGES,
                     GatewayIntent.GUILD_VOICE_STATES).disableCache(EnumSet.of(

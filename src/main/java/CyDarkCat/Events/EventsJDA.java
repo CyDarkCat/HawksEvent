@@ -8,8 +8,10 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import javax.annotation.Nonnull;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class EventsJDA extends ListenerAdapter{
+    ArrayList<String> cola = new ArrayList<String>();
     private Guild guild;
     private String Player;
     public String getPlayer(){
@@ -45,15 +47,49 @@ public class EventsJDA extends ListenerAdapter{
 
             event.getChannel().sendMessage(info.build()).queue();
         }else if(raw[0].equalsIgnoreCase(prefix + "scrim")){
-            EmbedBuilder info = new EmbedBuilder();
-            info.setTitle("HawksEvents");
-            info.setDescription("Solicitando un servidor...");
-            info.setColor(Color.CYAN);
-            event.getChannel().sendMessage(info.build()).queue();
-            Role verifiedrole = guild.getRolesByName("Verified",false).get(0);
-            event.getChannel().sendMessage(verifiedrole.getAsMention()).queue();
-            guild.createVoiceChannel("Team A").queue();
-            guild.createVoiceChannel("Team B").queue();
+            String userId = event.getAuthor().getId();
+            cola.add(userId);
+            for(int i = 0;i<cola.size();i++){
+                if(cola.get(i).equalsIgnoreCase(event.getAuthor().getId())){
+                    EmbedBuilder info = new EmbedBuilder();
+                    info.setTitle("HawksEvents");
+                    info.setDescription("No puedes Volver a Solicitar un Servidor");
+                    info.setColor(Color.RED);
+                //    Role verifiedrole = guild.getRolesByName("Verified",false).get(0);
+                    event.getChannel().sendMessage(info.build()).queue();
+                    cola.remove(userId);
+                    break;
+                }
+
+            }
+
+            if(cola.size() == 3 ){
+                EmbedBuilder info = new EmbedBuilder();
+                info.setTitle("HawksEvents");
+                info.setDescription("Servidores Llenos");
+                info.setColor(Color.RED);
+            //    Role verifiedrole = guild.getRolesByName("Verified",false).get(0);
+                event.getChannel().sendMessage(info.build()).queue();
+                return;
+            }else{
+                EmbedBuilder info = new EmbedBuilder();
+                info.setTitle("HawksEvents");
+                info.setDescription("Solicitando Servidores");
+                info.setColor(Color.CYAN);
+                Role verifiedrole = guild.getRolesByName("Verified",false).get(0);
+                event.getChannel().sendMessage(info.build()).queue();
+
+            }
+          //  EmbedBuilder info = new EmbedBuilder();
+            //info.setTitle("HawksEvents");
+            //info.setDescription("Solicitando un servidor...");
+            //info.setColor(Color.CYAN);
+           // event.getChannel().sendMessage(info.build()).queue();
+           // Role verifiedrole = guild.getRolesByName("Verified",false).get(0);
+           // event.getChannel().sendMessage(verifiedrole.getAsMention()).queue();
+           // guild.createVoiceChannel("Team A").queue();
+           // guild.createVoiceChannel("Team B").queue();
+            
 
         }else if(raw[0].equalsIgnoreCase(prefix + "Player")){
             if(raw.length != 2){
