@@ -1,0 +1,8 @@
+name: HawksEvents
+version: 1.0.0
+main: CyDarkCat.Hawks
+depend: [JDA]
+commands:
+  verify:
+    usage: /verify
+    description: Command to verify
